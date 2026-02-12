@@ -1,2 +1,2 @@
 # Mixed Messages
-### CodeCaademy portofoli
+### CodeCademy Portofolio Project
