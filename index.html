@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Astrology Vibes</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1e0533, #0f172a);
+      color: #f1f5f9;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #c084fc;
+      margin-bottom: 1.8rem;
+      font-size: 2.1rem;
+    }
+    .result {
+      background: rgba(0,0,0,0.3);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      border-left: 4px solid #a78bfa;
+    }
+    button {
+      background: linear-gradient(90deg, #7c3aed, #c084fc);
+      color: white;
+      border: none;
+      padding: 0.9rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 0 auto;
+      display: block;
+      transition: all 0.25s;
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.55);
+    }
+    .sign {
+      color: #e9d5ff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Today's Vibe Check ✨</h1>
+  
+  <div class="result" id="result">
+Click the button to get your daily astrology nonsense
+  </div>
+
+  <button onclick="showDaily()">Give me today's vibe</button>
+</div>
+
+<script>
+// ────────────────────────────────────────────────
+const astrology = {
+  _sign: [
+    'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
+    'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
+  ],
+  _luck: ['Very unlucky', 'Unlucky', 'lucky', 'very lucky'],
+  _advice: [
+    'have a beer',
+    'trust no one',
+    'take time for yourself',
+    'take it easy',
+    'go out of your comfort zone'
+  ],
+
+  _getRandomSign(exclude = null) {
+    let index;
+    do {
+      index = Math.floor(Math.random() * this._sign.length);
+    } while (exclude !== null && this._sign[index] === exclude);
+    return this._sign[index];
+  },
+
+  getCompatibility() {
+    const good = this._getRandomSign();
+    const bad  = this._getRandomSign(good);
+
+    return {
+      goodWith: `You have good compatibility with: ${good}`,
+      badWith:  `You have bad compatibility with: ${bad}`
+    };
+  },
+
+  getDaily() {
+    const { goodWith, badWith } = this.getCompatibility();
+    const luck   = this._luck[Math.floor(Math.random() * this._luck.length)];
+    const advice = this._advice[Math.floor(Math.random() * this._advice.length)];
+
+    return `${goodWith}\n${badWith}\n\nYou are ${luck} today\n→ ${advice.charAt(0).toUpperCase() + advice.slice(1)} ←`;
+  }
+};
+
+// ────────────────────────────────────────────────
+function showDaily() {
+  const resultEl = document.getElementById('result');
+  resultEl.textContent = astrology.getDaily();
+  
+  // Optional: slight fade-in effect
+  resultEl.style.opacity = '0';
+  setTimeout(() => {
+    resultEl.style.transition = 'opacity 0.6s';
+    resultEl.style.opacity = '1';
+  }, 50);
+}
+</script>
+
+</body>
+</html>
